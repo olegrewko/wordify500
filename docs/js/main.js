@@ -1,181 +1,188 @@
-(function($) {
 
-	'use strict';
+$(function () {
 
-	// bootstrap dropdown hover
+  $(".menu a, .totop").on("click", function (event) {
+    //отменяем стандартную обработку нажатия по ссылке
+    event.preventDefault();
 
-  // loader
-  var loader = function() {
-    setTimeout(function() { 
-      if($('#loader').length > 0) {
-        $('#loader').removeClass('show');
-      }
-    }, 1);
-  };
-  loader();
+    //забираем идентификатор бока с атрибута href
+    var id = $(this).attr('href'),
 
-  // Stellar
-  $(window).stellar();
+      //узнаем высоту от начала страницы до блока на который ссылается якорь
+      top = $(id).offset().top;
 
-	
-	$('nav .dropdown').hover(function(){
-		var $this = $(this);
-		$this.addClass('show');
-		$this.find('> a').attr('aria-expanded', true);
-		$this.find('.dropdown-menu').addClass('show');
-	}, function(){
-		var $this = $(this);
-			$this.removeClass('show');
-			$this.find('> a').attr('aria-expanded', false);
-			$this.find('.dropdown-menu').removeClass('show');
-	});
+    //анимируем переход на расстояние - top за 1500 мс
+    $('body,html').animate({
+      scrollTop: top
+    }, 1500);
+  });
 
+   $('.multiple-items').slick({
+        infinite: true, // бесконечная прокрутка слайдов
+        slidesToShow: 5, // показывать по 6слайда
+         slidesToScroll: 1, // прокручивать по 3 слайда за раз
+         arrows: false, // не показывать стрелки
+         dots: true, // показывать точки индикаторы
+         dotsClass: 'slick-dots', // название класса для точек
+    });
 
-	$('#dropdown04').on('show.bs.dropdown', function () {
-	  console.log('show');
-	});
+  $('.slider-blog__inner').slick({
+    arrows: false,
+    prevArrow: '<button type="button" class="slick-prev"><img src="img/arrow-left.svg" alt="img/arrow-left.svg" /></button>',
+    nextArrow: '<button type="button" class="slick-next"><img src="img/arrow-right.svg" alt="img/arrow-right.svg" /></button>',
+    dots: true,
 
-
-
-	// home slider
-	$('.home-slider').owlCarousel({
-    loop:true,
     autoplay: true,
-    margin:10,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    nav:true,
-    autoplayHoverPause: true,
-    items: 1,
-    navText : ["<span class='ion-chevron-left'></span>","<span class='ion-chevron-right'></span>"],
-    responsive:{
-      0:{
-        items:1,
-        nav:false
+    autoplaySpeed: 3000,
+    fade: true,
+    responsive: [{
+        breakpoint: 768,
+        settings: {
+
+          arrows: false
+
+        }
       },
-      600:{
-        items:1,
-        nav:false
+
+    ]
+  });
+  $('.slider-blog__inner002').slick({
+    arrows: false,
+    prevArrow: '<button type="button" class="slick-prev"><img src="img/arrow-left.svg" alt="img/arrow-left.svg" /></button>',
+    nextArrow: '<button type="button" class="slick-next"><img src="img/arrow-right.svg" alt="img/arrow-right.svg" /></button>',
+    dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    fade: true,
+    responsive: [{
+        breakpoint: 768,
+        settings: {
+
+          arrows: false
+
+        }
       },
-      1000:{
-        items:1,
-        nav:true
+
+    ]
+  });
+
+
+  $('.menu__btn, .menu a').on('click', function name() {
+    $('.menu__list').toggleClass('menu__list--active');
+
+
+  });
+
+
+ $(".radio input").on("click", function (e) {
+   console.clear();
+   console.log(this.checked); // всегда true;
+   e.preventDefault();
+
+   setTimeout(() => $(this).prop("checked", !this.checked).trigger("change"));
+ });
+
+});
+
+
+
+         function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+
+    }
+         function myFunctionHeadphones() {
+        document.getElementById("myHeadphones").classList.toggle("show");
+    }
+         function myFunctionWireless() {
+        document.getElementById("myWireless").classList.toggle("show");
+    }
+         function myFunctionFind() {
+        document.getElementById("myFind").classList.toggle("show");
+    }
+
+
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
       }
     }
-	});
 
-	// owl carousel
-	var majorCarousel = $('.js-carousel-1');
-	majorCarousel.owlCarousel({
-    loop:true,
-    autoplay: false,
-    stagePadding: 0,
-    margin: 10,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    nav: false,
-    dots: false,
-    autoplayHoverPause: false,
-    items: 3,
-    responsive:{
-      0:{
-        items:1,
-        nav:false
-      },
-      600:{
-        items:2,
-        nav:false
-      },
-      1000:{
-        items:3,
-        nav:true,
-        loop:false
-      }
-  	}
-	});
+ $stepper: document.querySelector('.stepper');
+ if (vars.$stepper) {
 
-  // cusotm owl navigation events
-  $('.custom-next').click(function(event){
-    event.preventDefault();
-    // majorCarousel.trigger('owl.next');
-    majorCarousel.trigger('next.owl.carousel');
+  const $stepperInput = vars.$stepper.querySelector('.stepper__input'),
+    $stepperMinus = vars.$stepper.querySelector('.stepper__btn--minus'),
+    $stepperPlus = vars.$stepper.querySelector('.stepper__btn--plus');
 
-  })
-  $('.custom-prev').click(function(event){
-    event.preventDefault();
-    // majorCarousel.trigger('owl.prev');
-    majorCarousel.trigger('prev.owl.carousel');
-  })
+  $stepperInput.addEventListener('keydown', (e) => {
+    console.log(e.currentTarget.value)
+    if (e.currentTarget.value <= 1) {
+      $stepperMinus.classList.add('stepper__btn--disabled');
+      $stepperPlus.classList.remove('stepper__btn--disabled');
+    } else {
+      $stepperMinus.classList.remove('stepper__btn--disabled');
+    }
 
-	// owl carousel
-	var major2Carousel = $('.js-carousel-2');
-	major2Carousel.owlCarousel({
-    loop:true,
-    autoplay: true,
-    stagePadding: 7,
-    margin: 20,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    nav: false,
-    autoplayHoverPause: true,
-    items: 4,
-    navText : ["<span class='ion-chevron-left'></span>","<span class='ion-chevron-right'></span>"],
-    responsive:{
-      0:{
-        items:1,
-        nav:false
-      },
-      600:{
-        items:3,
-        nav:false
-      },
-      1000:{
-        items:4,
-        nav:true,
-        loop:false
-      }
-  	}
-	});
+    if (e.currentTarget.value > 99998) {
+      $stepperMinus.classList.remove('stepper__btn--disabled');
+      $stepperPlus.classList.add('stepper__btn--disabled');
+    } else {
+      $stepperPlus.classList.remove('stepper__btn--disabled');
+    }
+  });
 
+  $stepperPlus.addEventListener('click', (e) => {
+    let currentValue = parseInt($stepperInput.value);
+    currentValue++;
+    $stepperInput.value = currentValue;
 
- 
+    $stepperMinus.classList.remove('stepper__btn--disabled');
 
-	var contentWayPoint = function() {
-		var i = 0;
-		$('.element-animate').waypoint( function( direction ) {
+    if ($stepperInput.value > 99998) {
+      $stepperInput.value = 99999;
+      $stepperPlus.classList.add('stepper__btn--disabled');
+    } else {
+      $stepperPlus.classList.remove('stepper__btn--disabled');
+    }
+  });
 
-			if( direction === 'down' && !$(this.element).hasClass('element-animated') ) {
-				
-				i++;
+  $stepperMinus.addEventListener('click', (e) => {
+    let currentValue = parseInt($stepperInput.value);
+    currentValue--;
+    $stepperInput.value = currentValue;
 
-				$(this.element).addClass('item-animate');
-				setTimeout(function(){
+    $stepperPlus.classList.remove('stepper__btn--disabled');
 
-					$('body .element-animate.item-animate').each(function(k){
-						var el = $(this);
-						setTimeout( function () {
-							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
-								el.addClass('fadeIn element-animated');
-							} else if ( effect === 'fadeInLeft') {
-								el.addClass('fadeInLeft element-animated');
-							} else if ( effect === 'fadeInRight') {
-								el.addClass('fadeInRight element-animated');
-							} else {
-								el.addClass('fadeInUp element-animated');
-							}
-							el.removeClass('item-animate');
-						},  k * 100);
-					});
-					
-				}, 100);
-				
-			}
+    if ($stepperInput.value <= 1) {
+      $stepperInput.value = 1;
+      $stepperMinus.classList.add('stepper__btn--disabled');
+    } else {
+      $stepperMinus.classList.remove('stepper__btn--disabled');
+    }
+  });
 
-		} , { offset: '95%' } );
-	};
-	contentWayPoint();
+ }
 
-
-
-})(jQuery);
+//  $(document).foundation();
+// ---------------------------------------------
+// $(document).ready(function(){
+//     $('.multiple-items').slick({
+//         infinite: true, // бесконечная прокрутка слайдов
+//         slidesToShow: 5, // показывать по 6слайда
+//          slidesToScroll: 1, // прокручивать по 3 слайда за раз
+//          arrows: false, // не показывать стрелки
+//          dots: true, // показывать точки индикаторы
+//          dotsClass: 'slick-dots', // название класса для точек
+//     });
+// });
